@@ -205,11 +205,6 @@ tetto2=STRUCT([giuntura2,giuntura3,giuntura])
 tetto2a=S([1,2,3])([4.4,3.6,4.5])(tetto2)
 tetto2b=fin3=T([1,2,3])([-5.3,33.9,4.8])(tetto2a)
 
-
-def cespuglio(xval,yval,n,nxyz,distance):
-	p1=COLOR(colorCespuglio)(T([1,2,3])([xval,yval,0.6])(SPHERE(0.5)([8,8])))
-	return STRUCT(NN(n)([T(nxyz)(distance),STRUCT([p1])]))
-
 cesp=cespuglio(68,-50,30,2,1.5)
 cespa=STRUCT(NN(45)([T(1)(1),STRUCT([cesp])]))
 cesp1=STRUCT(NN(2)([T(1)(-60),STRUCT([cespa])]))
