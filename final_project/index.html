@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <title>Final project</title> 
+    <style>
+     html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background-color: #ffffff;
+      margin: 0;
+      overflow: hidden;
+      font-family: arial;
+    }
+
+    #pointer {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      margin-top: -15px;
+      margin-left: -15px;
+      width: 30px;
+      height: 30px;
+      display: none;
+      background-image: url("assets/images/pointer.jpg");
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+    #monitor{
+    display: none; 
+    position: absolute; 
+    left: 0px;
+    top: 0px;
+    }
+    #videoImage2{
+    display: none; 
+    position: absolute; 
+    left: 0px;
+    top: 0px;
+    }
+
+    </style> 
+  </head>
+  <div id="pointer"></div>
+
+  <body>
+  <!-- JavaScript libraries -->
+  <video id="monitor" autoplay="" width="160" height="120" style="visibility: hidden; float:left;"></video>
+  <script src="assets/libs/jquery.min.js"></script> 
+  <script src="assets/libs/three.min.js"></script>
+  <script src="assets/libs/dat.gui.min.js"></script>
+  <script src="assets/libs/tween.min.js"></script>
+  <script src="assets/libs/PointerLockControls.js"></script>
+  <script src="assets/libs/TrackballControls.js"></script>
+  <script src="assets/libs/OBJLoader.js"></script>
+  <script src="assets/libs/MTLLoader.js"></script> 
+  <script src="assets/libs/OBJMTLLoader.js"></script> 
+  
+  <script src="scripts/Animations.js"></script>
+  <script src="scripts/Furniture.js"></script>
+  <script src="scripts/ParticlesEffects.js"></script>
+  <script src="scripts/objectAnimation.js"></script>
+  <script src="scripts/fpsAnimation.js"></script>
+  <script src="scripts/gui.js"></script>
+  <script src="scripts/init.js"></script>
+  <script src="scripts/textureUtility.js"></script>
+  <script src="scripts/windowAndDoor.js"></script>
+  <script src="scripts/light.js"></script>
+  <script src="scripts/wallFloor.js"></script>
+  
+  <canvas id="videoImage2" width="160" height="120" style="visibility: hidden; float:left;"></canvas>
+  <script>
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    window.URL = window.URL || window.webkitURL;
+
+    var camvideo = document.getElementById('monitor');
+
+    if (!navigator.getUserMedia) 
+    {
+      document.getElementById('errorMessage').innerHTML = 
+      'Sorry. <code>navigator.getUserMedia()</code> is not available.';
+    } else {
+      navigator.getUserMedia({video: true}, gotStream, noStream);
+    }
+
+    function gotStream(stream) 
+    {
+      if (window.URL) 
+        {   camvideo.src = window.URL.createObjectURL(stream);   } 
+  else // Opera
+    {   camvideo.src = stream;   }
+
+  camvideo.onerror = function(e) 
+  {   stream.stop();   };
+
+  stream.onended = noStream;
+}
+
+function noStream(e) 
+{
+  var msg = 'No camera available.';
+  if (e.code == 1) 
+    {   msg = 'User denied access to use camera.';   }
+  // document.getElementById('errorMessage').textContent = msg;
+}
+</script>
+
+<script>
+  var camera, scene, renderer,trackballControls,controlGUI;
+  var raycaster,projector;
+
+  var apartment,ligth;
+  //tv
+  var videoImageContext,videoTexture,video;
+  //webcam
+  var webCamImageContext,webCamTexture,webCamvideo;
+
+  var toIntersect = [];
+  //game
+  var man=[];
+
+
+  init();
+
+</script>
+ 
+ </body>
+</html>
+
